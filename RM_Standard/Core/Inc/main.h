@@ -63,6 +63,7 @@ void Error_Handler(void);
 #define LED_R_GPIO_Port GPIOH
 #define IST8310_DRDY_Pin GPIO_PIN_3
 #define IST8310_DRDY_GPIO_Port GPIOG
+#define IST8310_DRDY_EXTI_IRQn EXTI3_IRQn
 #define LED_G_Pin GPIO_PIN_11
 #define LED_G_GPIO_Port GPIOH
 #define LED_B_Pin GPIO_PIN_10

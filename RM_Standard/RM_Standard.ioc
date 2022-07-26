@@ -114,6 +114,7 @@ NVIC.BusFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
 NVIC.DMA2_Stream2_IRQn=true\:5\:0\:true\:false\:true\:false\:true\:true
 NVIC.DMA2_Stream3_IRQn=true\:0\:0\:false\:false\:true\:false\:true\:true
 NVIC.DebugMonitor_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false
+NVIC.EXTI3_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
 NVIC.EXTI4_IRQn=true\:0\:0\:false\:false\:true\:true\:true\:true
 NVIC.ForceEnableDMAVector=true
 NVIC.HardFault_IRQn=true\:0\:0\:false\:false\:true\:false\:false\:false

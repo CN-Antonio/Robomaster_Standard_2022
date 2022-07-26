@@ -31,6 +31,7 @@
 /* USER CODE BEGIN Includes */
 #include "struct_typedef.h"
 #include "BMI088driver.h"
+#include "ist8310driver.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -72,6 +73,17 @@ fp32 temperature;
 
 // BMI088
 fp32 gyro[3], accel[3], temp;
+// IST8310
+fp32 mag[3];
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    if(GPIO_Pin == IST8310_DRDY_Pin)
+    {
+        ist8310_read_mag(mag);
+    }
+
+}
 
 // ADC fun
 static uint16_t adcx_get_chx_value(ADC_HandleTypeDef *ADCx, uint32_t ch)
@@ -183,7 +195,7 @@ int main(void)
   while(BMI088_init()){       // SPI-IMU
 		;
 	}
-
+  ist8310_init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
