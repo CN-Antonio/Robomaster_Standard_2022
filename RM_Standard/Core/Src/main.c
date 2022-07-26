@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "adc.h"
 #include "can.h"
 #include "dma.h"
@@ -56,6 +57,7 @@
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 void init_vrefint_reciprocal(void);
 fp32 get_temprate(void);
@@ -146,8 +148,6 @@ uint8_t get_hardware_version(void)
                                 | (HAL_GPIO_ReadPin(HW1_GPIO_Port, HW1_Pin)<<1)
                                 | (HAL_GPIO_ReadPin(HW2_GPIO_Port, HW2_Pin)<<2);
 
-
-
     return hardware_version;
 }
 /* USER CODE END 0 */
@@ -198,6 +198,13 @@ int main(void)
   ist8310_init();
   /* USER CODE END 2 */
 
+  /* Call init function for freertos objects (in freertos.c) */
+  MX_FREERTOS_Init();
+
+  /* Start scheduler */
+  osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -207,7 +214,7 @@ int main(void)
 		voltage = get_battery_voltage();
 		temperature = get_temprate();
 		if(voltage < 12){
-			HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
+			// HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_TogglePin(LED_R_GPIO_Port, LED_R_Pin);
 		}
 		else{
