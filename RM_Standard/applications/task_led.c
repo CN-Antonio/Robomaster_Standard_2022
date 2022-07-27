@@ -7,7 +7,7 @@ void blue_led_task(void const * argument)
 {
     while(1)
     {
-        HAL_GPIO_TogglePin(LED_B_GPIO_Port, LED_B_Pin);
+        // HAL_GPIO_TogglePin(LED_B_GPIO_Port, LED_B_Pin);
         osDelay(500);
     }
 }
