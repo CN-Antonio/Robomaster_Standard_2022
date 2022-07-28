@@ -33,6 +33,7 @@
 #include "struct_typedef.h"
 #include "BMI088driver.h"
 #include "ist8310driver.h"
+#include "remote_control.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -86,36 +87,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 
 }
 
-// ADC fun
-// static uint16_t adcx_get_chx_value(ADC_HandleTypeDef *ADCx, uint32_t ch)
-// {
-//     static ADC_ChannelConfTypeDef sConfig = {0};
-//     sConfig.Channel = ch;
-//     sConfig.Rank = 1;
-//     sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;//ADC_SAMPLETIME_3CYCLES;
-
-//     if (HAL_ADC_ConfigChannel(ADCx, &sConfig) != HAL_OK)
-//     {
-//         Error_Handler();
-//     }
-
-//     HAL_ADC_Start(ADCx);
-
-//     HAL_ADC_PollForConversion(ADCx, 10);
-//     return (uint16_t)HAL_ADC_GetValue(ADCx);
-// }
-// void init_vrefint_reciprocal(void)
-// {
-//     uint8_t i = 0;
-//     uint32_t total_adc = 0;
-//     for(i = 0; i < 200; i++)
-//     {
-//         total_adc += adcx_get_chx_value(&hadc1, ADC_CHANNEL_VREFINT);
-//     }
-
-//     voltage_vrefint_proportion = 200 * 1.2f / total_adc;
-// }
-
 /* USER CODE END 0 */
 
 /**
@@ -158,7 +129,8 @@ int main(void)
   MX_I2C3_Init();
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
-	
+  // Init()
+	remote_control_init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

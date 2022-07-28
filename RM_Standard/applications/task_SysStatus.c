@@ -95,14 +95,16 @@ void entry_SysStatus(void const * argument)
         if(voltage < 12){
 			HAL_GPIO_WritePin(LED_B_GPIO_Port, LED_B_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_TogglePin(LED_R_GPIO_Port, LED_R_Pin);
+            osDelay(50);
 		}
 		else{
 			HAL_GPIO_WritePin(LED_R_GPIO_Port, LED_R_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_TogglePin(LED_B_GPIO_Port, LED_B_Pin);
+            osDelay(500);
 		}
 		// BMI088
         BMI088_read(gyro, accel, &temp);
-        osDelay(50);
+        osDelay(100);
     }
     
 }
