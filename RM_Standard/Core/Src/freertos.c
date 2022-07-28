@@ -51,6 +51,7 @@
 osThreadId defaultTaskHandle;
 osThreadId LED_BLUEHandle;
 osThreadId SysStatusHandle;
+osThreadId CAN_motorHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -60,6 +61,7 @@ osThreadId SysStatusHandle;
 void StartDefaultTask(void const * argument);
 extern void blue_led_task(void const * argument);
 extern void entry_SysStatus(void const * argument);
+extern void entry_motor(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -117,6 +119,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of SysStatus */
   osThreadDef(SysStatus, entry_SysStatus, osPriorityNormal, 0, 128);
   SysStatusHandle = osThreadCreate(osThread(SysStatus), NULL);
+
+  /* definition and creation of CAN_motor */
+  osThreadDef(CAN_motor, entry_motor, osPriorityNormal, 0, 128);
+  CAN_motorHandle = osThreadCreate(osThread(CAN_motor), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
