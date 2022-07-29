@@ -15,7 +15,6 @@ void entry_motor(void const * argument)
 
         // gimbal motor x1
         CAN_cmd_gimbal(10000, 10000, 10000, 10000);
-        
         osDelay(2);
     }
 }

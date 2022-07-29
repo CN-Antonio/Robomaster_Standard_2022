@@ -26,6 +26,7 @@
 #include "string.h"
 
 #include "detect_task.h"
+#include "task_led.h"
 
 
 
@@ -144,9 +145,11 @@ void slove_data_error(void)
     RC_restart(SBUS_RX_BUF_NUM);
 }
 
-//串口中断
+//*/ 串口中断
 void USART3_IRQHandler(void)
 {
+    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
+
     if(huart3.Instance->SR & UART_FLAG_RXNE)//接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart3);
@@ -213,10 +216,14 @@ void USART3_IRQHandler(void)
             {
                 //处理遥控器数据
                 sbus_to_rc(sbus_rx_buf[1], &rc_ctrl);
+                // HAL_Delay(500);
             }
         }
+        HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
     }
-}
+
+    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
+} //*/
 
 //取正函数
 static int16_t RC_abs(int16_t value)
@@ -292,5 +299,6 @@ void sbus_to_usart1(uint8_t *sbus)
         usart_tx_buf[19] += usart_tx_buf[i];
     }
     // usart1_tx_dma_enable(usart_tx_buf, 20);
+    usart6_tx_dma_enable(usart_tx_buf, 20);
 }
 
