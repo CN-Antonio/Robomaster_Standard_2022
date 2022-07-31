@@ -31,6 +31,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "struct_typedef.h"
+#include "bsp_usart.h"
 #include "BMI088driver.h"
 #include "ist8310driver.h"
 #include "remote_control.h"
@@ -77,6 +78,8 @@ fp32 voltage, temperature;
 fp32 gyro[3], accel[3], temp;
 // IST8310
 fp32 mag[3];
+// RC
+// const RC_ctrl_t *local_rc_ctrl;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -130,6 +133,7 @@ int main(void)
   MX_USART3_UART_Init();
   /* USER CODE BEGIN 2 */
   // Init()
+  usart6_tx_dma_init();
 	remote_control_init();
   /* USER CODE END 2 */
 
@@ -143,16 +147,10 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {		
-		handware_version = get_hardware_version();
-		// ADC
-		voltage = get_battery_voltage();
-		temperature = get_temprate();
-		
+  {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-		HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }

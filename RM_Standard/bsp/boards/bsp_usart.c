@@ -35,21 +35,27 @@ void usart1_tx_dma_enable(uint8_t *data, uint16_t len)
     //disable DMA
     //失效DMA
     __HAL_DMA_DISABLE(&hdma_usart1_tx);
-
     while(hdma_usart1_tx.Instance->CR & DMA_SxCR_EN)
     {
         __HAL_DMA_DISABLE(&hdma_usart1_tx);
     }
 
+    //clear flag
+    //清除标志位
+    __HAL_DMA_CLEAR_FLAG(&hdma_usart1_tx, DMA_HISR_TCIF7);
     __HAL_DMA_CLEAR_FLAG(&hdma_usart1_tx, DMA_HISR_TCIF7);
 
+    //set data address
+    //设置数据地址
     hdma_usart1_tx.Instance->M0AR = (uint32_t)(data);
+    //set data length
+    //设置数据长度
     __HAL_DMA_SET_COUNTER(&hdma_usart1_tx, len);
 
+    //enable DMA
+    //使能DMA
     __HAL_DMA_ENABLE(&hdma_usart1_tx);
 }
-
-
 
 void usart6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 {
@@ -109,10 +115,13 @@ void usart6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 
 }
 
-
-
-void usart6_tx_dma_enable(uint8_t *data, uint16_t len)
+void usart6_tx_dma_init(void)
 {
+    //enable the DMA transfer for the receiver and tramsmit request
+    //使能DMA串口接收和发送
+    SET_BIT(huart6.Instance->CR3, USART_CR3_DMAR);
+    SET_BIT(huart6.Instance->CR3, USART_CR3_DMAT);
+
     //disable DMA
     //失效DMA
     __HAL_DMA_DISABLE(&hdma_usart6_tx);
@@ -122,11 +131,37 @@ void usart6_tx_dma_enable(uint8_t *data, uint16_t len)
         __HAL_DMA_DISABLE(&hdma_usart6_tx);
     }
 
+    hdma_usart6_tx.Instance->PAR = (uint32_t) & (USART6->DR);
+    hdma_usart6_tx.Instance->M0AR = (uint32_t)(NULL);
+    hdma_usart6_tx.Instance->NDTR = 0;
+}
+
+
+
+void usart6_tx_dma_enable(uint8_t *data, uint16_t len)
+{
+    //disable DMA
+    //失效DMA
+    __HAL_DMA_DISABLE(&hdma_usart6_tx);
+    while(hdma_usart6_tx.Instance->CR & DMA_SxCR_EN)
+    {
+        __HAL_DMA_DISABLE(&hdma_usart6_tx);
+    }
+
+    //clear flag
+    //清除标志位
+    __HAL_DMA_CLEAR_FLAG(&hdma_usart6_tx, DMA_HISR_TCIF6);
     __HAL_DMA_CLEAR_FLAG(&hdma_usart6_tx, DMA_HISR_TCIF6);
 
+    //set data address
+    //设置数据地址
     hdma_usart6_tx.Instance->M0AR = (uint32_t)(data);
+    //set data length
+    //设置数据长度
     __HAL_DMA_SET_COUNTER(&hdma_usart6_tx, len);
 
+    //enable DMA
+    //使能DMA
     __HAL_DMA_ENABLE(&hdma_usart6_tx);
 }
 

@@ -148,8 +148,6 @@ void slove_data_error(void)
 //*/ 串口中断
 void USART3_IRQHandler(void)
 {
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_SET);
-
     if(huart3.Instance->SR & UART_FLAG_RXNE)//接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart3);
@@ -215,15 +213,11 @@ void USART3_IRQHandler(void)
             if(this_time_rx_len == RC_FRAME_LENGTH)
             {
                 //处理遥控器数据
-                sbus_to_rc(sbus_rx_buf[1], &rc_ctrl);
-                // HAL_Delay(500);
+                sbus_to_rc(sbus_rx_buf[1], &rc_ctrl);                
             }
         }
-        HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
     }
-
-    HAL_GPIO_WritePin(LED_G_GPIO_Port, LED_G_Pin, GPIO_PIN_RESET);
-} //*/
+} // USART3_IRQHandler
 
 //取正函数
 static int16_t RC_abs(int16_t value)
