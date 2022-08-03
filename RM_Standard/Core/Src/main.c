@@ -79,7 +79,11 @@ fp32 gyro[3], accel[3], temp;
 // IST8310
 fp32 mag[3];
 // RC
-// const RC_ctrl_t *local_rc_ctrl;
+
+// Motor
+int16_t current = 164;
+fp32 ref = 0;
+fp32 set = 0;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {

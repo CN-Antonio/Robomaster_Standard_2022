@@ -3,4 +3,6 @@
 
 #include "CAN_receive.h"
 
+// int16_t *getSpeedpoint(void);
+
 #endif

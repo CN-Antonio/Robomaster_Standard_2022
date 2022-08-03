@@ -109,6 +109,12 @@ void usart_printf(const char *fmt,...)
 
 } //uart_printf
 
+// temp fun
+int16_t getSpeedpoint(void)
+{
+    return chassis_motor_measure->speed_rpm;
+}
+
 void entry_SysStatus(void const * argument)
 {
 	init_vrefint_reciprocal();  // ADC

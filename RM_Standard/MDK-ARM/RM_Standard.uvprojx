@@ -2136,6 +2136,11 @@
           <GroupName>controller</GroupName>
           <Files>
             <File>
+              <FileName>pid.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\components\controller\pid.c</FilePath>
+            </File>
+            <File>
               <FileName>CAN_receive.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\components\controller\CAN_receive.c</FilePath>

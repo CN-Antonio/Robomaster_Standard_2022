@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "bsp_rc.h": "c"
+        "bsp_rc.h": "c",
+        "cmsis_os.h": "c"
     }
 }
